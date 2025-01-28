@@ -4,9 +4,9 @@ import 'package:flutter_internals/keys/Todos.dart';
 enum Priority { urgent, high, low }
 
 final todoIcons = {
-  Priority.urgent : Icons.notifications_active,
+  Priority.urgent: Icons.notifications_active,
   Priority.high: Icons.low_priority,
-  Priority.low:Icons.list
+  Priority.low: Icons.list
 };
 
 class Todo {
@@ -24,6 +24,7 @@ class Keys extends StatefulWidget {
 }
 
 class _KeysState extends State<Keys> {
+  String _order = 'asc';
   final List<Todo> _todoItame = [
     const Todo(
       "Leare flutter ",
@@ -38,6 +39,26 @@ class _KeysState extends State<Keys> {
       Priority.low,
     ),
   ];
+
+  void _setOrder() {
+    setState(() {
+      if (_order == 'asc') {
+        _order = 'dsc';
+        return;
+      }
+      _order = 'asc';
+    });
+  }
+
+  List<Todo> _ordertodos() {
+    List<Todo> shortList = _todoItame;
+    shortList.sort((a, b) {
+      final bComeAfterA = a.text.compareTo(b.text);
+      return _order == 'asc' ? bComeAfterA : -bComeAfterA;
+    });
+    return shortList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -49,11 +70,17 @@ class _KeysState extends State<Keys> {
               //crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                TextButton(onPressed: (){}, child: Text(""))
+                TextButton.icon(
+                  onPressed: _setOrder,
+                  icon: _order == 'asc'
+                      ? const Icon(Icons.arrow_downward)
+                      : const Icon(Icons.arrow_upward),
+                  label: Text(
+                      "Sort ${_order == 'asc' ? "Desending" : "Asending"}"),
+                ),
               ],
             ),
-            for (var todo in _todoItame)
-              Todos(todoitem: todo),
+            for (var todo in _ordertodos()) Todos(todoitem: todo),
           ],
         ),
       ),
