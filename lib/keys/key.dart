@@ -82,7 +82,10 @@ class _KeysState extends State<Keys> {
               ],
             ),
             for (var todo in _ordertodos())
-              CheckebalTodoItem(todoitem: todo),
+              CheckebalTodoItem(
+                key: ValueKey(todo.text), //ObjectKey() it is manage object 
+                todoitem: todo,
+              ),
           ],
         ),
       ),
