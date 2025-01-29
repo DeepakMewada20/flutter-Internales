@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_internals/keys/Todos.dart';
+import 'package:flutter_internals/keys/checkebal_todo_item.dart';
 
 enum Priority { urgent, high, low }
 
@@ -80,7 +81,8 @@ class _KeysState extends State<Keys> {
                 ),
               ],
             ),
-            for (var todo in _ordertodos()) Todos(todoitem: todo),
+            for (var todo in _ordertodos())
+              CheckebalTodoItem(todoitem: todo),
           ],
         ),
       ),
